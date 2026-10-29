@@ -110,7 +110,9 @@ def gerar_grafico(dados, media, desvio, destino):
         import matplotlib.pyplot as plt
     except ImportError as erro:
         raise RuntimeError(
-            "Para gerar o gráfico, instale matplotlib (python -m pip install matplotlib)."
+            "Não foi possível importar matplotlib no Python em uso. "
+            "Instale a dependência nesse ambiente com "
+            "python -m pip install matplotlib e execute novamente."
         ) from erro
 
     minimo, maximo = min(dados), max(dados)

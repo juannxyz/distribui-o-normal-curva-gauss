@@ -1,189 +1,83 @@
-# Conceito, exemplo numérico e implementação em Python
+# Análise das notas de matemática
 
-## 1. Objetivo
+Este programa lê uma coluna de notas de um arquivo CSV, calcula estatísticas descritivas e compara a distribuição observada com a regra empírica da distribuição normal. Ao final, exibe um relatório no terminal e salva um histograma com a curva normal teórica.
 
-Desenvolver um programa em Python capaz de carregar dados numéricos de um arquivo CSV, calcular medidas estatísticas, construir gráficos e avaliar se a variável selecionada apresenta comportamento aproximadamente compatível com uma distribuição normal.
+## Requisitos
 
-A atividade deverá relacionar os conceitos teóricos da distribuição normal com uma análise prática de dados reais.
+- Python 3.8 ou superior;
+- `matplotlib` para gerar o gráfico.
 
-## 2. Base de dados sugerida
+Os cálculos estatísticos usam apenas recursos da biblioteca padrão do Python (`csv`, `math`, `collections` e `pathlib`). O `matplotlib` é usado somente para produzir a imagem.
 
-Utilize a base **Students Performance in Exams**, disponível no Kaggle.
+### Instalar o matplotlib
 
-**Arquivo:** `StudentsPerformance.csv`
+Em um ambiente virtual chamado `.venv`:
 
-A base possui 1.000 registros e oito colunas, contendo características dos estudantes e notas de matemática, leitura e escrita.
-
-As principais variáveis quantitativas são:
-
-- `math score`: nota de matemática;
-- `reading score`: nota de leitura;
-- `writing score`: nota de escrita.
-
-Para a análise principal do trabalho, utilize a coluna **`math score`**.
-
-## 3. Introdução teórica
-
-A distribuição normal, também conhecida como **Curva de Gauss**, é uma distribuição contínua, simétrica e com formato de sino. Ela é determinada por dois parâmetros:
-
-- **Média (μ):** determina o centro da distribuição;
-- **Desvio-padrão (σ):** determina a dispersão dos valores.
-
-A função densidade da distribuição normal é:
-
-\[
-f(x) = \frac{1}{\sigma\sqrt{2\pi}}
-\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
-\]
-
-Para dados aproximadamente normais, espera-se que:
-
-- aproximadamente **68%** dos valores estejam entre \(\mu-\sigma\) e \(\mu+\sigma\);
-- aproximadamente **95%** estejam entre \(\mu-2\sigma\) e \(\mu+2\sigma\);
-- aproximadamente **99{,}7%** estejam entre \(\mu-3\sigma\) e \(\mu+3\sigma\).
-
-Essa propriedade é conhecida como **regra empírica 68–95–99,7**.
-
-## 4. Atividades solicitadas
-
-O programa deverá ser construído a partir dos dados brutos do arquivo CSV. Não serão aceitos programas que apresentem resultados inseridos manualmente.
-
-### Parte A — Pesquisa teórica
-
-Elabore uma introdução explicando:
-
-- o conceito de distribuição normal;
-- as características da Curva de Gauss;
-- a função da média na distribuição;
-- a função do desvio-padrão;
-- o significado da regra 68–95–99,7;
-- o conceito de escore padronizado \(z\).
-
-O escore \(z\) deve ser apresentado pela fórmula:
-
-\[
-z = \frac{x-\mu}{\sigma}
-\]
-
-### Parte B — Leitura e organização dos dados
-
-Desenvolva um programa que:
-
-- leia o arquivo `StudentsPerformance.csv` utilizando o módulo `csv`;
-- utilize `csv.DictReader` para acessar as colunas;
-- converta os valores da coluna `math score` para números inteiros;
-- armazene as notas em uma lista;
-- informe a quantidade de registros carregados;
-- verifique se existem valores ausentes ou inválidos.
-
-### Parte C — Medidas estatísticas
-
-Calcule, sem utilizar bibliotecas estatísticas:
-
-- quantidade de dados;
-- menor nota;
-- maior nota;
-- amplitude total;
-- média aritmética;
-- mediana;
-- moda ou modas;
-- variância amostral;
-- desvio-padrão amostral;
-- coeficiente de assimetria.
-
-Utilize a fórmula do desvio-padrão amostral:
-
-\[
-s = \sqrt{\frac{\sum_{i=1}^{n}(x_i-\bar{x})^2}{n-1}}
-\]
-
-### Parte D — Regra 68–95–99,7
-
-Determine a quantidade e o percentual de notas localizadas nos seguintes intervalos:
-
-| Intervalo | Percentual esperado |
-|---|---:|
-| \(\bar{x}-s\) até \(\bar{x}+s\) | 68% |
-| \(\bar{x}-2s\) até \(\bar{x}+2s\) | 95% |
-| \(\bar{x}-3s\) até \(\bar{x}+3s\) | 99,7% |
-
-### Parte E — Escores padronizados
-
-Calcule o escore \(z\) para:
-
-- a menor nota;
-- a maior nota;
-- uma nota igual a 50;
-- uma nota igual a 75;
-- uma nota igual a 90.
-
-Classifique como possíveis valores atípicos aqueles que apresentarem:
-
-\[
-|z| > 3
-\]
-
-### Parte F — Representação gráfica
-
-O programa deverá gerar:
-
-- histograma das notas;
-- curva normal teórica sobreposta ao histograma;
-- linha vertical indicando a média;
-- linhas indicando um desvio-padrão abaixo e acima da média;
-- gráfico de caixa, opcionalmente.
-
-### Parte G — Conclusão
-
-Responda às seguintes perguntas:
-
-1. O histograma apresenta aproximadamente o formato de sino?
-2. Média e mediana apresentam valores próximos?
-3. Os percentuais observados são próximos da regra 68–95–99,7?
-4. A distribuição apresenta assimetria?
-5. Existem valores atípicos?
-6. É adequado afirmar que os dados seguem perfeitamente uma distribuição normal?
-7. Qual seria uma conclusão mais cuidadosa sobre a distribuição das notas?
-
-## 5. Arquivos para entrega
-
-Cada dupla deverá entregar a seguinte estrutura:
-
-```text
-Trabalho_Distribuicao_Normal/
-├── analise_distribuicao_normal.py
-├── StudentsPerformance.csv
-├── histograma_curva_normal.png
-└── relatorio.pdf
+```bash
+.venv/bin/python -m pip install matplotlib
 ```
 
-A apresentação de 10 minutos deverá conter:
+No Windows, use:
 
-- fundamentação teórica;
-- descrição da base de dados;
-- fórmulas utilizadas;
-- resultados encontrados;
-- gráfico produzido;
-- interpretação dos resultados;
-- conclusão.
+```powershell
+.venv\Scripts\python.exe -m pip install matplotlib
+```
 
-## 6. Restrições
+## Arquivo de entrada
 
-Não deverão ser utilizadas bibliotecas estatísticas para realizar os cálculos.
+O arquivo precisa estar no formato CSV e conter uma coluna com o cabeçalho exato `math score`. Por padrão, o programa usa `StudentsPerformance.csv`, localizado na mesma pasta do script. A base incluída neste projeto contém 1.000 registros.
 
-**Não utilizar:**
+Valores vazios são contados como ausentes e ignorados. Valores que não podem ser convertidos para números inteiros são contados como inválidos e também ignorados. O programa informa essas quantidades no relatório. Se o cabeçalho não existir ou não houver nenhuma nota válida, a análise termina com uma mensagem de erro.
 
-- `statistics`;
-- `scipy.stats`;
-- `numpy.mean`;
-- `numpy.std`;
-- `pandas.mean`;
-- `pandas.std`.
+## Executar
 
-**Podem ser utilizados:**
+Na raiz do projeto, usando o ambiente virtual:
 
-- `csv`;
-- `math`;
-- `matplotlib`.
+```bash
+.venv/bin/python analise_distribuicao_normal.py
+```
 
-O `matplotlib` será usado somente para a geração dos gráficos.
+Para analisar outro CSV, informe seu caminho como argumento:
+
+```bash
+.venv/bin/python analise_distribuicao_normal.py caminho/para/notas.csv
+```
+
+O caminho informado pode ser relativo ao diretório em que o comando foi executado ou absoluto. Para localizar o Python do ambiente virtual no Windows, use `.venv\Scripts\python.exe` no lugar de `.venv/bin/python`.
+
+## Resultados calculados
+
+O relatório apresentado no terminal inclui:
+
+- quantidade de notas válidas, valores ausentes e inválidos;
+- menor e maior nota e amplitude;
+- média, mediana e moda(s);
+- variância e desvio-padrão amostrais;
+- coeficiente de assimetria amostral;
+- quantidade e percentual de notas nos intervalos de um, dois e três desvios-padrão em torno da média, comparados com 68%, 95% e 99,7%;
+- escores z da menor nota, da maior nota e dos valores de referência 50, 75 e 90. O programa sinaliza como possível valor atípico um escore com `|z| > 3`;
+- uma conclusão descritiva baseada nas medidas calculadas.
+
+As medidas são calculadas a partir dos dados do CSV em cada execução. A variância e o desvio-padrão usam a fórmula amostral (`n - 1`). A comparação com a regra empírica é uma avaliação aproximada: não é um teste formal de normalidade e não prova que os dados seguem uma distribuição normal.
+
+## Gráfico gerado
+
+O programa salva `histograma_curva_normal.png` na mesma pasta do arquivo CSV analisado. O gráfico contém:
+
+- histograma das notas em escala de densidade;
+- curva normal teórica calculada com a média e o desvio-padrão amostral;
+- linha vertical da média;
+- linhas verticais em um desvio-padrão abaixo e acima da média.
+
+Se o `matplotlib` não puder ser importado pelo Python em uso, o programa informa como instalar a dependência. Erros de leitura do CSV ou de gravação do gráfico também são apresentados no terminal.
+
+## Arquivos do projeto
+
+```text
+.
+├── analise_distribuicao_normal.py
+├── StudentsPerformance.csv
+└── README.md
+```
+
+Após executar o programa, o gráfico `histograma_curva_normal.png` também estará disponível na pasta de saída.
